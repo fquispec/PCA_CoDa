@@ -1,0 +1,26 @@
+rm(list = ls())
+library(compositions);library(foreign);library(dplyr);library(expss);library(car);library(robCompositions);
+setwd("C:/Users/aleja/Desktop/probar");
+f0<-"ineq_v0 - u.csv";
+d0<- read.csv(file=f0, header=TRUE, sep = ";", dec = ".")
+#data(arcticLake)
+arcticLake=d0[,c(4:6)]
+## robust estimation (default):
+res.rob <- pcaCoDa(arcticLake)
+#plot(res.rob)
+#plot(res.rob)
+#biplot(res.rob)
+biplot(res.rob,xlabs = d0$quintile, cex=0.6,xlim=c(-0.3,0.8), ylim=c(-0.5,1.6))
+#summary(res.rob)
+#xlim=c(-0.5,1), ylim=c(-2.5,0.5),
+## classical estimation:
+res.cla <- pcaCoDa(arcticLake, method="classical")
+#plot(res.cla)
+#biplot(res.cla)
+biplot(res.cla, xlabs = d0$quintile, cex=0.6,xlim=c(-0.3,0.8), ylim=c(-0.5,1.6))
+#summary(res.rob)
+
+tr=prcomp(arcticLake, center = TRUE, scale=TRUE)
+tr
+plot(tr)
+biplot(tr, xlabs=d0$country)
